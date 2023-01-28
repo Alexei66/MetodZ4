@@ -56,13 +56,13 @@ namespace NewAppMetodZ4
         /// <param name="countA">Счетчи считающий кол-во выполненых итераций для Арифмет. пр.</param>
         /// <param name="Array">Массив с числами</param>
         /// <returns></returns>
-        static bool Arifmetich(int[] Array)
+        static bool IsArifmetich(int[] Array)
         {
-            for (int i = 0; i < Array.Length; i++)
+            for (int i = 1; i < Array.Length; i++)
             {
                 int d = Array[1] - Array[0];
 
-                if (Array[i] != Array[1] + d * (i - 1))          //(numb[i + 1] == (numb[i]+ numb[i+2])/2)
+                if (d != Array[i] - Array[i-1])          //(numb[i + 1] == (numb[i]+ numb[i+2])/2)
                 {
                     return false;
                 }
@@ -75,19 +75,19 @@ namespace NewAppMetodZ4
         /// <param name="countG">>Счетчи считающий кол-во выполненых итераций</param>
         /// <param name="Array">Массив с числами</param>
         /// <returns></returns>
-        static bool Geometric(int[] Array)
+        static bool IsGeometric(int[] Array)
         {
-            for (int i = 0; i < Array.Length; i++)
+            
+            for (int i = 1; i < Array.Length; i++)
             {
-                if (Array[i] == 0)
+                if (Array[i-1] == 0)
                 {
                     return false;
                 }
                 else
                 {
                     int q = Array[1] / Array[0];
-
-                    if (Array[i] != Array[1] * Math.Pow(q, (i - 1)))
+                    if (q != Array[i] / Array[i-1])
                     {
                         return false;
                     }
@@ -101,13 +101,21 @@ namespace NewAppMetodZ4
         /// <param name="countA">Счетчи считающий кол-во выполненых итераций для Арифмет. пр.</param>
         /// <param name="countG">Счетчи считающий кол-во выполненых итераций для Геометр. пр.</param>
         /// <param name="Array">Массив с числами</param>
-        static void Opredelenie(bool restArifm, bool resGeom)
+        static void Opredelenie(int[] numb)
         {
-            if (restArifm == true)
+            bool restArifm = IsArifmetich(numb);
+
+            bool resGeom = IsGeometric(numb);
+
+            if (restArifm && resGeom)
+            {
+                Console.WriteLine("Прогрессия арифметическая и геометрическая");
+            }
+            else if (restArifm)
             {
                 Console.WriteLine("Арифметическая прогрессия");
             }
-            else if (resGeom == true)
+            else if (resGeom)
             {
                 Console.WriteLine("Геометрическая прогрессия");
             }
@@ -120,8 +128,7 @@ namespace NewAppMetodZ4
 
         static void Main(string[] args)
         {
-
-
+            
             // Задание 4. Написать метод принимающий некоторое количесво чисел, выяснить
             // является заданная последовательность элементами арифметической или геометрической прогрессии
 
@@ -139,67 +146,9 @@ namespace NewAppMetodZ4
 
             int[] numb = new int[splitInput.Length];
 
+            ConvertToInt(numb, splitInput);            
 
-
-            ConvertToInt(numb, splitInput);
-
-            bool restArifm = Arifmetich(numb);
-
-            bool resGeom = Geometric(numb);
-
-            Opredelenie(restArifm, resGeom);
-
-
-
-            //for (int i = 0; i < Split_Input.Length; i++)  // Конвертирование цикла string в int
-            //{
-            //    for (int j = 0; j < Split_Input.Length; j++)
-            //    {
-            //        numb[j] = Convert.ToInt32(Split_Input[j]);
-            //    }
-            //}
-
-            //for (int i = 0; i < numb.Length; i++)
-            //{
-            //    int d = numb[1] - numb[0];
-
-            //    if (numb[i] == numb[1] + d * (i - 1))          //(numb[i + 1] == (numb[i]+ numb[i+2])/2)
-            //    {
-            //        countArifm++;
-            //    }
-            //}
-
-            //for (int i = 0; i < numb.Length; i++)
-            //{
-            //    if (numb[i] == 0)
-            //    {
-            //        break;
-            //    }
-            //    else
-            //    {
-            //        int q = numb[1] / numb[0];
-
-            //        if (numb[i] == numb[1] * Math.Pow(q, (i - 1)))
-            //        {
-            //            countGeom++;
-            //        }
-            //    }
-            //}
-
-            //if (countArifm == numb.Length)
-            //{
-            //    Console.WriteLine("Арифметическая прогрессия");
-            //}
-            //else if (countGeom == numb.Length)
-            //{
-            //    Console.WriteLine("Геометрическая прогрессия");
-            //}
-            //else 
-            //{
-            //    Console.WriteLine("Нет такой прогрессии");
-            //}
-
-
+            Opredelenie(numb);
 
         }
     }
